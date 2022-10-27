@@ -1,0 +1,768 @@
+
+/*********** INFORMATION *****************************
+
+- document:  Maximize - CSS3 Fullscreen Gallery
+- theme:     Theme 1
+- version:   1.0
+- date:      5.11.2013
+- author:    Capelle @ Codecanyon
+- profile:   http://codecanyon.net/user/Capelle
+
+*****************************************************/
+
+/*********** DIRECTORY *******************************
+
+1.	Fonts
+	1.1. Gallery fonts (default: Droid Sans)
+------------
+2.	Reset
+	2.1. Body
+	2.2. Gallery
+------------
+3.  Fade in effect
+	3.1. Preloader
+	3.2. Gallery fade-in on first load
+------------
+4.	Gallery
+	4.1. Gallery styles
+	4.2. Images
+	4.3. Titles and paragraphs
+	4.4. Selectors
+	4.5. Navigation arrows
+-----------
+5.	Hidden menu
+	5.1. Main styles
+	5.2. Open/close label
+	5.3. Menu elements
+-----------
+7.	Commons styles
+	7.1. Transitions
+	7.2. Other
+-----------
+8.	Media queries
+	8.1. Max width 1024px
+	8.2. Max width 800px
+	8.3. Max height 640px
+
+*****************************************************/
+
+
+/*  ==================
+    1. FONTS
+    ==================  */
+
+/** 1.1. Gallery fonts ***************/
+
+/* @import url(http://fonts.googleapis.com/css?family=Lato:300,400); Delete this import if you're changing the font family in 2.2. Gallery reset */
+
+
+/*  ==================
+    2. RESET
+    ==================  */
+
+/** 2.1. Body reset ***************/
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+}
+
+/** 2.2. Gallery reset ************/
+
+#maximize * {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: 300;
+	font-style: normal;
+	font-size: 100%;
+	font-family: 'Lato', sans-serif; /* Edit this if you want to match the font with your template design */
+	vertical-align: baseline;
+	line-height: normal;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+#maximize > ol,
+#maximize > ul,
+#maximize > li {
+	list-style: none;
+}
+#maximize a {
+	text-decoration: none;
+}
+#maximize input {
+	display: none;
+}
+#maximize label {
+	cursor: pointer;
+}
+/* Note: If you experience issues with reset above, please adjust the selectors and values according to your template/website. When adjusting the reset is adviced to check up the elements on your page, as they might distort. */
+
+
+/*  ==================
+    3. FADE IN EFFECT
+    ==================  */
+
+/** 3.1. Preloader ************/
+
+#preloader {
+	width: 300px;
+	height: 4px;
+	overflow: hidden;
+	background-color: #555; /* Preloader line color */
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	right: 0;
+	top: 48%;
+	bottom: auto;
+	margin: 0 auto;
+	/* Hide preloader after first image starts to fade in */
+	-webkit-animation: hide 0.8s ease-out 1 forwards;
+	-moz-animation: hide 0.8s ease-out 1 forwards;
+	-ms-animation: hide 0.8s ease-out 1 forwards;
+	-o-animation: hide 0.8s ease-out 1 forwards;
+	animation: hide 0.8s ease-out 1 forwards;
+}
+@-webkit-keyframes hide {
+	0%    { opacity: 1; }
+	40%   { opacity: 1; }
+	100%  { opacity: 0; }
+}
+@-moz-keyframes hide {
+	0%    { opacity: 1; }
+	40%   { opacity: 1; }
+	100%  { opacity: 0; }
+}
+@-ms-keyframes hide {
+	0%    { opacity: 1; }
+	40%   { opacity: 1; }
+	100%  { opacity: 0; }
+}
+@-o-keyframes hide {
+	0%    { opacity: 1; }
+	40%   { opacity: 1; }
+	100%  { opacity: 0; }
+}
+@keyframes hide {
+	0%    { opacity: 1; }
+	40%   { opacity: 1; }
+	100%  { opacity: 0; }
+}
+.preloader {
+	width: 300px;
+	height: 4px;
+	background-color: #f0f0f0; /* Preloader background color */
+	margin-top: 0;
+	margin-left: -300px;
+	/* Preloader bar animation // preload = animation name ; 0.5s = animation duration ; cubic-bezier = animation effect ; 1 = iteration count ; forwards = last keyframe value */
+	-webkit-animation: preload 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1 forwards;
+	-moz-animation: preload 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1 forwards;
+	-ms-animation: preload 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1 forwards;
+	-o-animation: preload 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1 forwards;
+	animation: preload 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1 forwards;
+}
+@-webkit-keyframes preload {
+	0%    { margin-left: 0; }
+	100%  { margin-left: 300px; }
+}
+@-moz-keyframes preload {
+	0%    { margin-left: 0; }
+	100%  { margin-left: 300px; }
+}
+@-ms-keyframes preload {
+	0%    { margin-left: 0; }
+	100%  { margin-left: 300px; }
+}
+@-o-keyframes preload {
+	0%    { margin-left: 0; }
+	100%  { margin-left: 300px; }
+}
+@keyframes preload {
+	0%    { margin-left: 0; }
+	100%  { margin-left: 300px; }
+}
+
+/** 3.2. Gallery fade-in on page load ************/
+
+.fade-in {
+	opacity: 0;
+	/* First image fade in animation // fadeIn = animation name ; 0.6s = animation duration ; ease-in = animation effect ; 1 = iteration count ; forwards = last keyframe value ; 1.2s = animation delay */
+	-webkit-animation: fadeIn 0.6s ease-in 1 forwards 0.6s;
+	-moz-animation: fadeIn 0.6s ease-in 1 forwards 0.6s;
+	-ms-animation: fadeIn 0.6s ease-in 1 forwards 0.6s;
+	-o-animation: fadeIn 0.6s ease-in 1 forwards 0.6s;
+	animation: fadeIn 0.6s ease-in 1 forwards 0.6s;
+}
+@-webkit-keyframes fadeIn {
+	0%    { opacity: 0; }
+	100%  { opacity: 1; }
+}
+@-moz-keyframes fadeIn {
+	0%    { opacity: 0; }
+	100%  { opacity: 1; }
+}
+@-ms-keyframes fadeIn {
+	0%    { opacity: 0; }
+	100%  { opacity: 1; }
+}
+@-o-keyframes fadeIn {
+	0%    { opacity: 0; }
+	100%  { opacity: 1; }
+}
+@keyframes fadeIn {
+	0%    { opacity: 0; }
+	100%  { opacity: 1; }
+}
+
+
+/*  ==================
+    4. GALLERY
+    ==================  */
+
+/** 4.1. Gallery styles ************/
+
+#maximize {
+	z-index: 2;
+}
+#maximize .gallery {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+#maximize .fade {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: auto;
+	bottom: auto;
+	background-size: cover;
+	background-position: center center; 
+	background-repeat: no-repeat;
+	visibility: hidden;
+	opacity: 0;
+	z-index: 0;
+	/* Transition effect for images */
+	-webkit-transition: opacity 1s, visibility 1s;
+	-moz-transition: opacity 1s, visibility 1s;
+	-ms-transition: opacity 1s, visibility 1s;
+	-o-transition: opacity 1s, visibility 1s;
+	transition: opacity 1s, visibility 1s;
+}
+
+/** 4.2. Images ************/
+
+.image-1 {
+	background-image: url("../images/big/larger-port.jpg"); /* <-- First image */
+}
+.image-2 {
+	background-image: url("../images/big/larger-port2.jpg"); /* <-- Second image */
+}
+.image-3 {
+	background-image: url("../images/big/larger-port3.jpg"); /* <-- Third image */
+}
+.image-4 {
+		background-image: url("../images/big/larger-port4.jpg"); /* <-- Fourth image */
+}
+.image-5  {
+	background-image: url("../images/big/larger-port5.jpg"); /* <-- Fifth image */
+}
+
+.image-6 {
+	background-image: url("../images/big/larger-port6.jpg"); /* <-- Sixth image */
+}
+.image-7 {
+	position:fixed;
+    z-index: -1; /* <-- Seventh image */
+	
+}
+.image-8 {
+	background-image: url("../images/big/red-folder.png"); /* <-- Eight image */
+	
+}
+.image-9 {
+	background-image: url("../images/big/r-j-altadis.png"); /* <-- nineth image */
+	
+}
+.image-10 {
+	position:fixed;
+    z-index: -1;/* <-- Tenth image */
+	
+}
+/** 4.3. Titles and paragraphs *********/
+
+#maximize .caption {
+	position: absolute;
+	bottom: 10%;
+	left: 0;
+	right: 0;
+	top: auto;
+	margin: 0 auto;
+	width: auto;
+	color: #fff;
+	padding: 0 7%;
+	text-align: center;
+}
+#maximize .caption h3 {
+	font-size: 1.4em;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-left: -20%;
+}
+#maximize .caption p {
+	font-size: 0.8em;
+	font-weight: 400;
+	padding-top: 4px;
+	margin-right: -20%;
+}
+
+#maximize .caption h3,
+#maximize .caption p {
+	display: block;
+	opacity: 0;
+	visibility: hidden;
+	position: relative;
+	-webkit-transition: margin 0.3s ease-in-out 0.3s, opacity 0.6s ease-in-out 0.3s;
+	-moz-transition: margin 0.3s ease-in-out 0.3s, opacity 0.6s ease-in-out 0.3s;
+	-ms-transition: margin 0.3s ease-in-out 0.3s, opacity 0.6s ease-in-out 0.3s;
+	-o-transition: margin 0.3s ease-in-out 0.3s, opacity 0.6s ease-in-out 0.3s;
+	transition: margin 0.3s ease-in-out 0.3s, opacity 0.6s ease-in-out 0.3s;
+}
+#maximize .caption a {
+	display: inline-block;
+	background: #222;
+	color: #fff;
+	padding: 2px 6px;
+}
+#maximize p.info {
+	position: absolute;
+	top: 3%;
+	right: 2%;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 10px;
+	color: #fff;
+}
+
+/** 4.4. Selectors *************/
+
+/* Captions */
+#maximize input#image-1:checked ~ .image-1 > .caption h3, /* <-- H3 title visibility for image 1 */
+#maximize input#image-2:checked ~ .image-2 > .caption h3, /* <-- H3 title visibility for image 2 */
+#maximize input#image-3:checked ~ .image-3 > .caption h3, /* <-- H3 title visibility for image 3 */
+#maximize input#image-4:checked ~ .image-4 > .caption h3, /* <-- H3 title visibility for image 4 */
+#maximize input#image-5:checked ~ .image-5 > .caption h3, /* <-- H3 title visibility for image 5 */
+#maximize input#image-6:checked ~ .image-6 > .caption h3, /* <-- H3 title visibility for image 6 */
+#maximize input#image-7:checked ~ .image-7 > .caption h3, /* <-- H3 title visibility for image 7 */
+#maximize input#image-8:checked ~ .image-8 > .caption h3, /* <-- H3 title visibility for image 7 */
+#maximize input#image-9:checked ~ .image-9 > .caption h3, /* <-- H3 title visibility for image 7 */
+#maximize input#image-10:checked ~ .image-10 >.caption h3, /* <-- H3 title visibility for image 7 */
+
+#maximize input#image-1:checked ~ .image-1 > .caption p,  /* <-- paragraph visibility for image 1 */
+#maximize input#image-2:checked ~ .image-2 > .caption p,  /* <-- paragraph visibility for image 2 */
+#maximize input#image-3:checked ~ .image-3 > .caption p,  /* <-- paragraph visibility for image 3 */
+#maximize input#image-4:checked ~ .image-4 > .caption p,  /* <-- paragraph visibility for image 4 */
+#maximize input#image-5:checked ~ .image-5 > .caption p,  /* <-- paragraph visibility for image 5 */
+#maximize input#image-6:checked ~ .image-6 > .caption p,  /* <-- paragraph visibility for image 6 */
+#maximize input#image-7:checked ~ .image-7 > .caption p,  /* <-- paragraph visibility for image 7 */
+#maximize input#image-8:checked ~ .image-8 > .caption p,  /* <-- paragraph visibility for image 8 */
+#maximize input#image-9:checked ~ .image-9 > .caption p,  /* <-- paragraph visibility for image 9 */
+#maximize input#image-10:checked ~ .image-10 > .caption p,  /* <-- paragraph visibility for image 10 */
+/* Images */
+#maximize input#image-1:checked ~ .image-1,
+#maximize input#image-2:checked ~ .image-2,
+#maximize input#image-3:checked ~ .image-3,
+#maximize input#image-4:checked ~ .image-4,
+#maximize input#image-5:checked ~ .image-5,
+#maximize input#image-6:checked ~ .image-6,
+#maximize input#image-7:checked ~ .image-7,
+#maximize input#image-8:checked ~ .image-8,
+#maximize input#image-9:checked ~ .image-9,
+#maximize input#image-10:checked ~ .image-10{
+	visibility: visible;
+	opacity: 1;
+	z-index: 10;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+/** 4.5. Navigation arrows ************/
+
+#maximize label.prev,
+#maximize label.next {
+	font-size: 60px;
+	color: #fff;
+	background: #222;
+	display: inline-block;
+	width: 50px;
+	height: 60px;
+	line-height: 46px;
+	text-align: center;
+	position: absolute;
+	top: 42%;
+}
+#maximize label.prev {
+	left: 0;
+	padding: 0 14px 0 8px;
+}
+#maximize label.next {
+	right: 0;
+	padding: 0 8px 0 14px;
+}
+
+
+/*  ==================
+    5. HIDDEN MENU
+    ==================  */
+
+/** 5.1. Main styles ************/
+
+#hidden-menu {
+	z-index: 999;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+}
+#hidden-menu article {
+	margin: 0;
+	overflow: hidden;
+	width: 100%;
+	height: 0;
+	left: 0;
+	bottom: 0;
+	position: fixed;
+	z-index: 9999;
+	background: #fff;
+	visibility: hidden;
+	-webkit-backface-visibility: hidden; /* Webkit transition fix */
+	/* Expanded menu animation */
+	-webkit-transition: height 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s, visibility 0.3s;
+	-moz-transition: height 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s, visibility 0.3s;
+	-ms-transition: height 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s, visibility 0.3s;
+	-o-transition: height 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s, visibility 0.3s;
+	transition: height 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s, visibility 0.3s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded {
+	height: 140px;
+	visibility: visible;
+}
+#hidden-menu input#menu-close:checked ~ article.expanded {
+	height: 0;
+	visibility: hidden;
+}
+
+/** 5.2. Open/close label ********/
+
+#hidden-menu label.open {
+	font-size: 1em;
+	text-align: center;
+	color: white;
+	background: orangered;
+	width: 100px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	padding: 10px 0;
+	position: absolute;
+	text-transform: uppercase;
+}
+#hidden-menu label.close {
+	color: #222;
+	right: 22px;
+	top: 18px;
+	position: absolute;
+	font-size: 20px;
+}
+#hidden-menu label.open:hover,
+#hidden-menu label.open:focus {
+	background: #222;
+	color: #fff;
+}
+#hidden-menu label.close:hover,
+#hidden-menu label.close:focus {
+	color: #999;
+}
+#hidden-menu input#menu-close:checked ~ label.open {
+	-webkit-animation: open 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) 1 forwards;
+	-moz-animation: open 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) 1 forwards;
+	-ms-animation: open 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) 1 forwards;
+	-o-animation: open 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) 1 forwards;
+	animation: open 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) 1 forwards;
+}
+@-webkit-keyframes open {
+	0%     { bottom: -100px; }
+	100%   { bottom: 0; }
+}
+@-moz-keyframes open {
+	0%     { bottom: -100px; }
+	100%   { bottom: 0; }
+}
+@-ms-keyframes open {
+	0%     { bottom: -100px; }
+	100%   { bottom: 0; }
+}
+@-o-keyframes open {
+	0%     { bottom: -100px; }
+	100%   { bottom: 0; }
+}
+@keyframes open {
+	0%     {bottom: -100px; }
+	100%   {bottom: 0; }
+}
+
+/** 5.3. Menu elements ********/
+
+#hidden-menu article .links {
+	display: block;
+	margin: 40px 0 0 0;
+	text-align: center;
+}
+#hidden-menu article .links a {
+	display: inline-block;
+	font-size: 1em;
+	text-transform: uppercase;
+	color: #222;
+	white-space: nowrap;
+	padding: 0 1%;
+}
+#hidden-menu article .links a:hover,
+#hidden-menu article .links a:focus {
+	color: #999;
+}
+#hidden-menu article .links a span {
+	padding-right: 6%;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(1) { /* <-- Transition and animation for menu link 1 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.3s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.3s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.3s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.3s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.4s, color 0.2s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(2) { /* <-- Transition and animation for menu link 2 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.4s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.4s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.4s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.4s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.4s, color 0.2s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(3) { /* <-- Transition and animation for menu link 3 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.5s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.5s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.5s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.5s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.5s, color 0.2s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(4) { /* <-- Transition and animation for menu link 4 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.6s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.6s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.6s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.6s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.6s, color 0.2s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(5) { /* <-- Transition and animation for menu link 5 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.7s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.7s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.7s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.7s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.7s, color 0.2s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(6) { /* <-- Transition and animation for menu link 6 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+}
+
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(7) { /* <-- Transition and animation for menu link 7 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+}
+
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(8) { /* <-- Transition and animation for menu link 8 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(9) { /* <-- Transition and animation for menu link 9 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a:nth-child(10) { /* <-- Transition and animation for menu link 10 */
+	-webkit-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 0.8s, color 0.2s;
+}
+#hidden-menu .pagination {
+	display: block;
+	width: 100%;
+	margin-top: 26px;
+	text-align: center;
+}
+#hidden-menu .pagination label {
+	font-size: 13px;
+	color: #999;
+	margin: 0 10px;
+}
+#hidden-menu .pagination label:hover,
+#hidden-menu .pagination label:focus {
+	color: #222;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .pagination label { /* <-- Transition and animation pagination labels. Note: If you will add or remove any menu links, adjust the animation delay of labels here (+/- approx 0.5s) */
+	-webkit-transition: opacity 0.6s ease-in-out 1.3s, color 0.2s;
+	-moz-transition: opacity 0.6s ease-in-out 1.3s, color 0.2s;
+	-ms-transition: opacity 0.6s ease-in-out 1.3s, color 0.2s;
+	-o-transition: opacity 0.6s ease-in-out 1.3s, color 0.2s;
+	transition: opacity 0.6s ease-in-out 1.3s, color 0.2s;
+}
+#hidden-menu article .links a,
+#hidden-menu .pagination label {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s ease-in-out;
+	-moz-transition: opacity 0.2s ease-in-out;
+	-ms-transition: opacity 0.2s ease-in-out;
+	-o-transition: opacity 0.2s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
+}
+#hidden-menu input#menu-open:checked ~ article.expanded > .title, 
+#hidden-menu input#menu-open:checked ~ article.expanded > .links a,
+#hidden-menu input#menu-open:checked ~ article.expanded > p,
+#hidden-menu input#menu-open:checked ~ article.expanded > .pagination label {
+	opacity: 1;
+}
+
+
+/*  ==================
+    7. COMMON STYLES
+    ==================  */
+
+/** 7.1. Transitions ************/
+
+#maximize label {
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+#maximize .caption a {
+	-webkit-transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+	-moz-transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+	-ms-transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+	-o-transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+	transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+/** 7.2. Other ************/
+
+#maximize .caption a:hover,
+#maximize label.prev:hover,
+#maximize label.next:hover,
+#maximize label.prev:focus,
+#maximize label.next:focus {
+	background: #fff;
+	color: #222;
+}
+
+
+/*  ==================
+    8. MEDIA QUERIES
+    ==================  */
+
+/** 8.1. Max width 1024px ************/
+
+@media screen and (max-width: 1024px) {
+	.image-1 {
+		background-image: url("../images/small/smaller-port.jpg"); /* <-- Smaller size for first image */
+	}
+	.image-2 {
+		background-image: url("../images/small/smaller-port2.jpg"); /* <-- Smaller size for second image */
+	}
+	.image-3 {
+		background-image: url("../images/small/smaller-port3.jpg"); /* <-- Smaller size for third image */
+	}
+	.image-4 {
+		background-image: url("../images/small/smaller-port4.jpg"); /* <-- Smaller size for fourth image */
+	}
+	.image-5 {
+		background-image: url("../images/small/smaller-port5.jpg"); /* <-- Smaller size for fifth image */
+	}
+	.image-6 {
+		background-image: url("../images/small/smaller-port6.jpg"); /* <-- Smaller size for sixth image */
+	}
+	.image-7  {
+		position:fixed;
+    z-index: -1; /* <-- Smaller size for sixth image */
+	}
+	
+	.image-8 {
+		background-image: url("../images/small/smallerr-j-folder.png"); /* <-- Smaller size for eightimage */
+	}
+	.image-9{
+		background-image: url("../images/small/smaller-red-folder.png"); /* <-- Smaller size for nineth image */
+	}
+	.image-10 {
+		position:fixed;
+    z-index: -1; /* <-- Smaller size for sixth image */
+	}
+
+
+}
+
+/** 8.2. Max width 800px ************/
+
+@media screen and (max-width: 800px) {
+	#hidden-menu input#menu-open:checked ~ article.expanded {
+		height: 200px;
+	}
+	#hidden-menu article .links {
+		margin-top: 60px;
+	}
+	#hidden-menu article .links a {
+		padding: 1% 2%;
+	}
+	#hidden-menu label.close {
+		padding: 4px 0;
+		width: 30px;
+		top: 0;
+		right: 0;
+		left: 0;
+		margin: 0 auto;
+		background: #222;
+		color: #fff;
+		text-align: center;
+	}
+}
+
+/** 8.3. Max height 640px ************/
+
+@media screen and (max-height: 640px) {
+	#maximize .caption {
+		bottom: 12%;
+	}
+	#maximize .caption h3 {
+		font-size: 1em;
+	}
+	#maximize .caption p {
+		font-size: 0.6em;
+	}
+}
